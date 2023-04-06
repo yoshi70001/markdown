@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <textarea name="" id="" cols="100" rows="70"></textarea>
+    <div style="width: 50vw;display: inline-block;">
+        <textarea name="" id="entradaEdit" cols="100" rows="70"></textarea>
+    </div>
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+
+    <script>
+        const entrada=document.querySelector('textarea');
+        var simplemde=new SimpleMDE({element: document.getElementById("entradaEdit")});
+
+        const el=document.querySelector('#entradaEdit');
+
+
+        var myHeaders=new Headers();
+        myHeaders.append("Content-Type","application/json");
+        entrada.addEventListener('blur',(e) => {
+            var raw=JSON.stringify({
+                "body": entrada.value
+            });
+
+            var requestOptions={
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow',
+                crossOriginIsolated: 'no-cors'
+            };
+
+            fetch("/markdown",requestOptions)
+                .then(response => response.text())
+                .then(result => {
+
+                    simplemde.value(result);
+                    simplemde.togglePreview();
+                })
+                .catch(error => console.log('error',error));
+        })
+
+    </script>
+</body>
+
+</html>
