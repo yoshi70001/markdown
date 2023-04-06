@@ -25,7 +25,7 @@ app.post('/markdown', (req, res) => {
             res.status(200).send(respo || '');
         });
     } catch (error) {
-        res.status(500).send('ERROR al generar');
+        res.status(500).send('ERROR al generar '+JSON.stringify(error));
     }
     // console.log(req.body.body);
 });
