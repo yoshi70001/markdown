@@ -3,7 +3,7 @@ const { writeFileSync, fsyncSync } = require('fs');
 const jsdocMark = require('jsdoc-to-markdown');
 // const showdown = require('showdown'),
 //     converter = new showdown.Converter();
-
+const PORT = process.env.PORT || 4000;
 const app = express();
 app.use((_req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -13,7 +13,7 @@ app.use((_req, res, next) => {
 });
 app.use(express.json());
 // app.use(cors);
-const port = 9000;
+
 
 app.get('/', (req, res) => {
     res.status(200).send('<h1>En linea</h1>');
@@ -30,6 +30,6 @@ app.post('/markdown', (req, res) => {
     // console.log(req.body.body);
 });
 
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
+app.listen(PORT, () => {
+    console.log(`Example app listening on port ${PORT}`);
 });
